@@ -6,20 +6,20 @@
     <div class="v-date-picker-input"
         v-bind:style="{ left: inputPosition.left + 'px', right: inputPosition.right + 'px' }"
         v-show="showPiker">
-        <input type="date" min="1970-01-01" 
+        <input type="date" min="{{minDate}}" max="{{maxDate}}" 
             v-model="datePicked"
         >
         </input>
         <span>{{timePicked}}</span>
         <br />
-        <span class="key">Hour</span> <input type="range" max="24" min="0" step="1" v-model="hourPicked"></input>
+        <span class="key">Hour</span> <input type="range" max="{{maxHour}}" min="{{minHour}}" step="1" v-model="hourPicked"></input>
         <br />
-        <span class="key">Minute</span> <input type="range" max="60" min="0" step="1" v-model="minutePicked"></input>
+        <span class="key">Minute</span> <input type="range" max="{{maxMinute}}" min="{{minMinute}}" step="1" v-model="minutePicked"></input>
         <br />
-        <span class="key">Second</span> <input type="range" max="60" min="0" step="1" v-model="secondPicked"></input>
+        <span class="key">Second</span> <input type="range" max="{{maxSecond}}" min="{{minSecond}}" step="1" v-model="secondPicked"></input>
         <br />
         <div class="divider"></div>
-        <button v-on:click="setNow">Now</button>
+        <button v-on:click="setNow" v-show="allowNow">Now</button>
         <button v-on:click="setDate(date)">Done</button>
         <div class="divider"></div>
         <button class="close-btn" v-on:click="hidePicker">Cancel</button>
@@ -32,6 +32,42 @@
             dateResult: {
                 type: String,
                 default: ''
+            },
+            allowNow: {
+                type: Boolean,
+                default: true
+            },
+            maxDate: {
+                type: String,
+                default: ''
+            },
+            minDate: {
+                type: String,
+                default: '1970-01-01'
+            },
+            maxHour: {
+                type: Number,
+                default: 23
+            },
+            minHour: {
+                type: Number,
+                default: 0
+            },
+            maxMinute: {
+                type: Number,
+                default: 59
+            },
+            minMinute: {
+                type: Number,
+                default: 0
+            },
+            maxSecond: {
+                type: Number,
+                default: 59
+            },
+            minSecond: {
+                type: Number,
+                default: 0
             }
         },
         data () {
@@ -71,17 +107,54 @@
                 this.inputPosition.top = e.target.offsetTop;
                 this.showPiker = !this.showPiker;
             },
+            ifOutOfRange (date, hour, minute, second) {
+                if (this.maxDate && date > this.maxDate) {
+                    return true;
+                }
+                if (this.minDate && date < this.minDate) {
+                    return true;
+                }
+                if (this.maxHour && hour > this.maxHour) {
+                    return true;
+                }
+                if (this.minHour && hour < this.minHour) {
+                    return true;
+                }
+                if (this.maxMinute && minute > this.maxMinute) {
+                    return true;
+                }
+                if (this.minMinute && minute < this.maxMinute) {
+                    return true;
+                }
+                if (this.maxSecond && second > this.maxSecond) {
+                    return true;
+                }
+                if (this.minSecond && second < this.minSecond) {
+                    return true;
+                }
+                return false;
+            },
             setNow () {
                 let now = new Date();
-                this.datePicked = now.getFullYear() + '-' + this.addZero(now.getMonth() + 1) + '-' + this.addZero(now.getDate());
-                this.hourPicked = this.addZero(now.getHours());
-                this.minutePicked = this.addZero(now.getMinutes());
-                this.secondPicked = this.addZero(now.getSeconds());
+                let _datePicked = now.getFullYear() + '-' + this.addZero(now.getMonth() + 1) + '-' + this.addZero(now.getDate());
+                let _hourPicked = this.addZero(now.getHours());
+                let _minutePicked = this.addZero(now.getMinutes());
+                let _secondPicked = this.addZero(now.getSeconds());
+
+                if (this.ifOutOfRange(_datePicked, _hourPicked, _minutePicked, _secondPicked)) {
+                    alert('Out of range !');
+                    return false;
+                }
+
+                this.datePicked = _datePicked;
+                this.hourPicked = _hourPicked;
+                this.minutePicked = _minutePicked;
+                this.secondPicked = _secondPicked;
             },
             setDate (date) {
                 if (date === ' 00:00:00') {
-                    this.setNow();
-                    this.dateResult = this.date;
+                    alert('Please choose a date');
+                    return false;
                 } else {
                     this.dateResult = date;
                 }

@@ -10616,6 +10616,42 @@
 	        dateResult: {
 	            type: String,
 	            default: ''
+	        },
+	        allowNow: {
+	            type: Boolean,
+	            default: true
+	        },
+	        maxDate: {
+	            type: String,
+	            default: ''
+	        },
+	        minDate: {
+	            type: String,
+	            default: '1970-01-01'
+	        },
+	        maxHour: {
+	            type: Number,
+	            default: 23
+	        },
+	        minHour: {
+	            type: Number,
+	            default: 0
+	        },
+	        maxMinute: {
+	            type: Number,
+	            default: 59
+	        },
+	        minMinute: {
+	            type: Number,
+	            default: 0
+	        },
+	        maxSecond: {
+	            type: Number,
+	            default: 59
+	        },
+	        minSecond: {
+	            type: Number,
+	            default: 0
 	        }
 	    },
 	    data: function data() {
@@ -10656,17 +10692,54 @@
 	            this.inputPosition.top = e.target.offsetTop;
 	            this.showPiker = !this.showPiker;
 	        },
+	        ifOutOfRange: function ifOutOfRange(date, hour, minute, second) {
+	            if (this.maxDate && date > this.maxDate) {
+	                return true;
+	            }
+	            if (this.minDate && date < this.minDate) {
+	                return true;
+	            }
+	            if (this.maxHour && hour > this.maxHour) {
+	                return true;
+	            }
+	            if (this.minHour && hour < this.minHour) {
+	                return true;
+	            }
+	            if (this.maxMinute && minute > this.maxMinute) {
+	                return true;
+	            }
+	            if (this.minMinute && minute < this.maxMinute) {
+	                return true;
+	            }
+	            if (this.maxSecond && second > this.maxSecond) {
+	                return true;
+	            }
+	            if (this.minSecond && second < this.minSecond) {
+	                return true;
+	            }
+	            return false;
+	        },
 	        setNow: function setNow() {
 	            var now = new Date();
-	            this.datePicked = now.getFullYear() + '-' + this.addZero(now.getMonth() + 1) + '-' + this.addZero(now.getDate());
-	            this.hourPicked = this.addZero(now.getHours());
-	            this.minutePicked = this.addZero(now.getMinutes());
-	            this.secondPicked = this.addZero(now.getSeconds());
+	            var _datePicked = now.getFullYear() + '-' + this.addZero(now.getMonth() + 1) + '-' + this.addZero(now.getDate());
+	            var _hourPicked = this.addZero(now.getHours());
+	            var _minutePicked = this.addZero(now.getMinutes());
+	            var _secondPicked = this.addZero(now.getSeconds());
+
+	            if (this.ifOutOfRange(_datePicked, _hourPicked, _minutePicked, _secondPicked)) {
+	                alert('Out of range !');
+	                return false;
+	            }
+
+	            this.datePicked = _datePicked;
+	            this.hourPicked = _hourPicked;
+	            this.minutePicked = _minutePicked;
+	            this.secondPicked = _secondPicked;
 	        },
 	        setDate: function setDate(date) {
 	            if (date === ' 00:00:00') {
-	                this.setNow();
-	                this.dateResult = this.date;
+	                alert('Please choose a date');
+	                return false;
 	            } else {
 	                this.dateResult = date;
 	            }
@@ -10682,7 +10755,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<input type=\"text\" class=\"v-date-picker-result\" v-on:click=\"onInputFocus\" v-model=\"dateResult\" _v-7399eda2=\"\">\n<div class=\"v-date-picker-input\" v-bind:style=\"{ left: inputPosition.left + 'px', right: inputPosition.right + 'px' }\" v-show=\"showPiker\" _v-7399eda2=\"\">\n    <input type=\"date\" min=\"1970-01-01\" v-model=\"datePicked\" _v-7399eda2=\"\">\n    \n    <span _v-7399eda2=\"\">{{timePicked}}</span>\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Hour</span> <input type=\"range\" max=\"24\" min=\"0\" step=\"1\" v-model=\"hourPicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Minute</span> <input type=\"range\" max=\"60\" min=\"0\" step=\"1\" v-model=\"minutePicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Second</span> <input type=\"range\" max=\"60\" min=\"0\" step=\"1\" v-model=\"secondPicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <div class=\"divider\" _v-7399eda2=\"\"></div>\n    <button v-on:click=\"setNow\" _v-7399eda2=\"\">Now</button>\n    <button v-on:click=\"setDate(date)\" _v-7399eda2=\"\">Done</button>\n    <div class=\"divider\" _v-7399eda2=\"\"></div>\n    <button class=\"close-btn\" v-on:click=\"hidePicker\" _v-7399eda2=\"\">Cancel</button>\n</div>\n";
+	module.exports = "\n<input type=\"text\" class=\"v-date-picker-result\" v-on:click=\"onInputFocus\" v-model=\"dateResult\" _v-7399eda2=\"\">\n<div class=\"v-date-picker-input\" v-bind:style=\"{ left: inputPosition.left + 'px', right: inputPosition.right + 'px' }\" v-show=\"showPiker\" _v-7399eda2=\"\">\n    <input type=\"date\" min=\"{{minDate}}\" max=\"{{maxDate}}\" v-model=\"datePicked\" _v-7399eda2=\"\">\n    \n    <span _v-7399eda2=\"\">{{timePicked}}</span>\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Hour</span> <input type=\"range\" max=\"{{maxHour}}\" min=\"{{minHour}}\" step=\"1\" v-model=\"hourPicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Minute</span> <input type=\"range\" max=\"{{maxMinute}}\" min=\"{{minMinute}}\" step=\"1\" v-model=\"minutePicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Second</span> <input type=\"range\" max=\"{{maxSecond}}\" min=\"{{minSecond}}\" step=\"1\" v-model=\"secondPicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <div class=\"divider\" _v-7399eda2=\"\"></div>\n    <button v-on:click=\"setNow\" v-show=\"allowNow\" _v-7399eda2=\"\">Now</button>\n    <button v-on:click=\"setDate(date)\" _v-7399eda2=\"\">Done</button>\n    <div class=\"divider\" _v-7399eda2=\"\"></div>\n    <button class=\"close-btn\" v-on:click=\"hidePicker\" _v-7399eda2=\"\">Cancel</button>\n</div>\n";
 
 /***/ },
 /* 13 */
