@@ -71,13 +71,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(9)
+	__webpack_require__(3)
 	__vue_script__ = __webpack_require__(7)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/date_picker.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(11)
+	__vue_template__ = __webpack_require__(8)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -96,8 +96,46 @@
 	})()}
 
 /***/ },
-/* 3 */,
-/* 4 */,
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(4);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(6)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7399eda2&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./date_picker.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7399eda2&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./date_picker.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(5)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n.v-date-picker-result[_v-7399eda2] {\n    text-align: center;\n}\n.v-date-picker-input[_v-7399eda2] {\n    position: absolute;\n    padding: 5px;\n    text-align: center;\n    background-color: #F5F5F5;\n    width: 220px;\n    z-index: 1;\n\n}\n.v-date-picker-input .divider[_v-7399eda2] {\n    border-top: 1px solid rgba(34,36,38,.15);\n    border-bottom: 1px solid rgba(255,255,255,.1);\n    margin: 10px 0;\n}\n.v-date-picker-input .key[_v-7399eda2] {\n    color: #FFFFFF;\n    background-color: #807F7F;\n    display: inline-block;\n    width: 60px;\n    text-align: center;\n}\n.v-date-picker-input .close-btn[_v-7399eda2] {\n    width: 100%;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
 /* 5 */
 /***/ function(module, exports) {
 
@@ -452,48 +490,7 @@
 	};
 
 /***/ },
-/* 8 */,
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(10);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7399eda2&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./date_picker.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7399eda2&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./date_picker.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(5)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n.v-date-picker-result[_v-7399eda2] {\n    text-align: center;\n}\n.v-date-picker-input[_v-7399eda2] {\n    position: absolute;\n    padding: 5px;\n    text-align: center;\n    background-color: #F5F5F5;\n    width: 220px;\n    z-index: 1;\n\n}\n.v-date-picker-input .divider[_v-7399eda2] {\n    border-top: 1px solid rgba(34,36,38,.15);\n    border-bottom: 1px solid rgba(255,255,255,.1);\n    margin: 10px 0;\n}\n.v-date-picker-input .key[_v-7399eda2] {\n    color: #FFFFFF;\n    background-color: #807F7F;\n    display: inline-block;\n    width: 60px;\n    text-align: center;\n}\n.v-date-picker-input .close-btn[_v-7399eda2] {\n    width: 100%;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<input type=\"text\" class=\"v-date-picker-result\" v-on:click=\"onInputFocus\" v-model=\"dateResult\" _v-7399eda2=\"\">\n<div class=\"v-date-picker-input\" v-bind:style=\"{ left: inputPosition.left + 'px', right: inputPosition.right + 'px' }\" v-show=\"showPiker\" _v-7399eda2=\"\">\n    <input type=\"date\" min=\"1970-01-01\" v-model=\"datePicked\" _v-7399eda2=\"\">\n    \n    <span _v-7399eda2=\"\">{{timePicked}}</span>\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Hour</span> <input type=\"range\" max=\"24\" min=\"0\" step=\"1\" v-model=\"hourPicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Minute</span> <input type=\"range\" max=\"60\" min=\"0\" step=\"1\" v-model=\"minutePicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <span class=\"key\" _v-7399eda2=\"\">Second</span> <input type=\"range\" max=\"60\" min=\"0\" step=\"1\" v-model=\"secondPicked\" _v-7399eda2=\"\">\n    <br _v-7399eda2=\"\">\n    <div class=\"divider\" _v-7399eda2=\"\"></div>\n    <button v-on:click=\"setNow\" _v-7399eda2=\"\">Now</button>\n    <button v-on:click=\"setDate(date)\" _v-7399eda2=\"\">Done</button>\n    <div class=\"divider\" _v-7399eda2=\"\"></div>\n    <button class=\"close-btn\" v-on:click=\"hidePicker\" _v-7399eda2=\"\">Cancel</button>\n</div>\n";
