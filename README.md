@@ -4,7 +4,7 @@ date-time picker for Vue
 
 ## Demo
 
-[Deom](http://dongss.github.io/vue-date-time-picker/demo/)
+[Demo](http://dongss.github.io/vue-date-time-picker/demo/)
 
 ## Usage
 
